@@ -1,14 +1,14 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import p from "../assets/images/welcome1.svg";
 
 export const Welcome1: React.FC = () => {
   return (
-    <div
-      style={{ border: "1px solid red" }}
-      className="text-3xl font-bold underline"
-    >
-      {" "}
-      1 <NavLink to="/welcome/2">下一页</NavLink>{" "}
+    <div className="text-center">
+      <img src={p} className="w-32 h-32.5" />
+      <h2 className="text-8 mt-12">
+        会挣钱 <br />
+        还要会省钱
+      </h2>
     </div>
   );
 };
