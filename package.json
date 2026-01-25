@@ -12,9 +12,11 @@
   "dependencies": {
     "@react-spring/web": "^10.0.3",
     "@tailwindcss/vite": "^4.1.18",
+    "axios": "^1.13.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.30.3",
+    "swr": "^2.3.8",
     "tailwindcss": "^4.1.18",
     "zustand": "^5.0.10"
   },
