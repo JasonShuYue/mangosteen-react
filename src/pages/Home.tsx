@@ -1,33 +1,28 @@
-import useSWR from "swr";
-import axios from "axios";
-
-const fetcher = (path: string) => {
-  return axios.get<{ message: string }>(path);
-};
+import { Button } from "@/components/ui/button";
+import add from "../assets/images/add.png";
+import p from "../assets/images/welcome1.svg";
 
 const Home = () => {
-  const { data, error, isValidating, mutate } = useSWR(
-    "http://121.196.236.94:3000",
-    fetcher
+  return (
+    <div className="ml-4 mr-4">
+      <div className="flex justify-center items-center mt-44">
+        <img width="128" height="130" src={p} />
+      </div>
+      <Button className="mt-27 w-full bg-[#5C33BE] text-lg">开始记账</Button>
+      <Button
+        className="bg-[#5C33BE] rounded-full w-14 h-14 fixed right-4 bottom-4"
+        variant="outline"
+        size="icon"
+      >
+        <img
+          src={add}
+          max-w="100%"
+          max-h="100%"
+          className="w-9 h-9 inline-block"
+        />
+      </Button>
+    </div>
   );
-  const isLoading = !data && !error;
-
-  const onClick = async () => {
-    const data = await axios.post("xxx"); // message: 'hi'
-    mutate(data);
-  };
-
-  console.log("data?.data");
-  console.log(data?.data);
-
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
-  if (isValidating) {
-    return <div>正在获取最新值</div>;
-  }
-
-  // 渲染数据
-  return <div>{data?.data.message}</div>;
 };
 
 export default Home;
