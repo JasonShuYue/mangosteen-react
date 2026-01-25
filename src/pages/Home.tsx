@@ -2,19 +2,21 @@ import { Button } from "@/components/ui/button";
 import add from "../assets/images/add.png";
 import p from "../assets/images/welcome1.svg";
 import useSWR from "swr";
-import axios from "axios";
+import { ajax } from "@/lib/ajax";
 
 const Home = () => {
   const { data: meData, error: meError } = useSWR("/api/v1/me", (path) => {
-    return axios.get(path);
+    return ajax.get(path);
   });
 
   const { data: itemsData, error: itemsError } = useSWR(
     meData ? "/api/v1/items" : null,
     (path) => {
-      return axios.get(path);
+      return ajax.get(path);
     }
   );
+
+  console.log(meData, meError, itemsData, itemsError);
 
   return (
     <div className="ml-4 mr-4">
