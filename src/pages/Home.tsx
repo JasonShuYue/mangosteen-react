@@ -1,22 +1,31 @@
 import { Button } from "@/components/ui/button";
+import useSWR from "swr";
+import { Navigate } from "react-router-dom";
+
 import add from "../assets/images/add.png";
 import p from "../assets/images/welcome1.svg";
-import useSWR from "swr";
 import { ajax } from "@/lib/ajax";
 
 const Home = () => {
-  const { data: meData, error: meError } = useSWR("/api/v1/me", (path) => {
-    return ajax.get(path);
-  });
-
+  const { data: meData, error: meError } = useSWR(
+    "/api/v1/me",
+    async (path) => (await ajax.get<Resource<User>>(path)).data.resource
+  );
   const { data: itemsData, error: itemsError } = useSWR(
     meData ? "/api/v1/items" : null,
-    (path) => {
-      return ajax.get(path);
-    }
+    async (path) => (await ajax.get<Resources<Item>>(path)).data
   );
 
-  console.log(meData, meError, itemsData, itemsError);
+  const isLoadingMe = !meData && !meError;
+  const isLoadingItems = meData && !itemsData && !itemsError;
+
+  if (isLoadingMe || isLoadingItems) {
+    return <div>加载中……</div>;
+  }
+
+  if (itemsData?.resources[0]) {
+    return <Navigate to="/items" />;
+  }
 
   return (
     <div className="ml-4 mr-4">

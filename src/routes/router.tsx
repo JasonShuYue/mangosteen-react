@@ -12,6 +12,7 @@ import Home from "../pages/Home";
 export const router = createBrowserRouter([
   { path: "/", element: <Root /> },
   { path: "/home", element: <Home /> },
+  { path: "/items", element: <div>items</div> },
   {
     path: "/welcome",
     element: <WelcomeLayout />,
