@@ -5,6 +5,7 @@ import { Link, useLocation, useOutlet, useNavigate } from "react-router-dom";
 
 import logo from "../assets/images/logo.svg";
 import { useSwipe } from "../hooks/useSwipe";
+import { useLocalStore } from "../stores/useStores";
 
 const linkMap = {
   "/welcome/1": "/welcome/2",
@@ -19,6 +20,13 @@ export const WelcomeLayout: React.FC = () => {
   const location = useLocation();
   const outlet = useOutlet(); // 用于获取当前路由匹配的子组件
   const [extraStyle, setExtraStyle] = useState({ position: "relative" });
+  const main = useRef<HTMLElement>(null);
+  const { direction } = useSwipe(main, {
+    onTouchStart: (e) => e.preventDefault(),
+  });
+  const nav = useNavigate();
+
+  const { setHasReadWelcomes } = useLocalStore();
 
   map.current[location.pathname] = outlet;
 
@@ -44,12 +52,6 @@ export const WelcomeLayout: React.FC = () => {
     },
   });
 
-  const main = useRef<HTMLElement>(null);
-  const { direction } = useSwipe(main, {
-    onTouchStart: (e) => e.preventDefault(),
-  });
-  const nav = useNavigate();
-
   useEffect(() => {
     if (direction === "left") {
       console.log("animating.current::::", animating.current);
@@ -63,8 +65,7 @@ export const WelcomeLayout: React.FC = () => {
   }, [direction, location.pathname, linkMap]);
 
   const onSkip = () => {
-    localStorage.setItem("hasReadWelcomes", "yes");
-    console.log("存储了 hasReadWelcomes");
+    setHasReadWelcomes(true);
   };
 
   return (
