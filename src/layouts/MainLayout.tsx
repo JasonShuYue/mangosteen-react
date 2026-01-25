@@ -1,5 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
 export const MainLayout: React.FC = () => {
-  return <Outlet />;
+  const hasRead = localStorage.getItem("hasReadWelcomes");
+
+  if (hasRead === "yes") {
+    return <Navigate to="/home" />;
+  } else {
+    return (
+      <div>
+        <Outlet />
+      </div>
+    );
+  }
 };
