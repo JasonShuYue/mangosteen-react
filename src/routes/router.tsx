@@ -11,7 +11,7 @@ import Home from "../pages/Home";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Root /> },
-  { path: "/home", element: <Home /> },
+  { path: "/home", element: <Home title="首页" /> },
   { path: "/items", element: <div>items</div> },
   {
     path: "/welcome",

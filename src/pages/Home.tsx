@@ -2,11 +2,18 @@ import { Button } from "@/components/ui/button";
 import useSWR from "swr";
 import { Navigate } from "react-router-dom";
 
+import { ajax } from "@/lib/ajax";
 import add from "../assets/images/add.png";
 import p from "../assets/images/welcome1.svg";
-import { ajax } from "@/lib/ajax";
+import { useTitle } from "../hooks/useTitle";
 
-const Home = () => {
+interface Props {
+  title?: string;
+}
+
+const Home = (props: Props) => {
+  useTitle(props.title);
+
   const { data: meData, error: meError } = useSWR(
     "/api/v1/me",
     async (path) => (await ajax.get<Resource<User>>(path)).data.resource
